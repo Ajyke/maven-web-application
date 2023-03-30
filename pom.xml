@@ -6,7 +6,7 @@
 	<artifactId>maven-web-application</artifactId>
 	<packaging>war</packaging>
 	
-	<version>0.0.2-SNAPSHOT</version> 
+	<version>0.0.2</version> 
 	
 	<name>maven-web-application</name>
 
@@ -95,7 +95,7 @@
 	    <repository>
 	      <id>nexus</id>
 	      <name>Landmark Technologies Releases Nexus Repository</name>
-	      <url>http://44.202.50.188:8081/repository/Tesla-payR/</url>
+	      <url>http://54.173.226.71:8081/repository/Tesla-release/</url>
 	    </repository>
 	    
 	    <snapshotRepository>
