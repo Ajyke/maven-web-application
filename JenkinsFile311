@@ -1,0 +1,30 @@
+node{
+   def mavenHome = tool name: 'mavem3.9.1'
+    stage('CloneCode'){
+    git 'https://github.com/Ajyke/maven-web-application'
+    }
+    stage('MavenBuild'){
+    sh "${mavenHome}/bin/mvn package"
+    }
+    stage('CodeQuality'){
+    sh "${mavenHome}/bin/mvn sonar:sonar"
+    }
+    stage('ArtifactsBackup'){
+    sh "${mavenHome}/bin/mvn deploy"
+    }
+    stage('UATDeplyment'){
+   deploy adapters: [tomcat9(credentialsId: 'tomcat-cred', path: '', url: 'http://54.88.70.16:8080/')], contextPath: null, war: 'target/*.war'
+    }
+    stage('ManualApproval'){
+        sh "echo 'Application is ready for review'"
+        timeout(time:5, unit:'HOURS'){
+            input message: 'Kindly review and approve'
+        }
+    }
+     stage('UATDeplyment'){
+  deploy adapters: [tomcat9(credentialsId: 'tomcat-cred', path: '', url: 'http://54.88.70.16:8080/')], contextPath: null, war: 'target/*.war'
+    }
+    stage('EmailNotification'){
+        emailext body: 'All is well', subject: 'All is well', to: 'ajikeezichi@yahoo.com'
+    }
+}
